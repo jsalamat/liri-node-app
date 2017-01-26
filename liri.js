@@ -21,7 +21,7 @@ if (commands == "my-tweets"){
 	    // for (var i = 0; i < tweets.length||i < 20; i++){
 	    	console.log(tweets[i].text);
 	    	console.log("");
-	    	console.log('-----------------------------------')
+	    	console.log('------------------------------------------------------------------')
 	    }
 	  }
 	});
@@ -50,23 +50,33 @@ if (commands == "spotify-this-song"){
 if (commands == "movie-this"){
 	// Grab or assemble the movie name and store it in a variable called "titleName"
 	for (var i=4; i < process.argv.length; i++){
-	    if (i == 5) titleName = titleName + process.argv[i];
+	    if (i == 20) titleName = titleName + process.argv[i];
+	    // 20 is max word of the movie title, remember it start at 4
 	    else titleName = titleName + "+" + process.argv[i];
 	    // "[space]" could work but we prefer "+" for omdapi
 	}
-	console.log(titleName);
+	// console.log(titleName);
 
-	var queryUrl = "http://www.omdbapi.com/?t=" + titleName + "&y=&plot=short&r=json";
-	console.log(queryUrl);
-
+	var queryUrl = "http://www.omdbapi.com/?t=" + titleName + "&y=&plot=short&r=json&tomatoes=true";
+	// console.log(queryUrl);
+// http://www.omdbapi.com/?t=Mr+Nobody&y=&plot=short&r=json&tomatoes=true
 	request(queryUrl, function (error, response, body) {
 	  if (!error && response.statusCode == 200) {
-	    console.log(JSON.parse(body));
-	    // If the request is successful
-	  // Then log the Release Year for the movie
-	    console.log(JSON.parse(body).Released);
-	      //JSON.parse()
-	    // the body is a string if it is  a json it is better to convert it to json
+	    // console.log(JSON.parse(body));
+	  	console.log('------------------------------------------------------------------')
+	  	console.log("Title: " + (JSON.parse(body).Title));
+	    console.log("Released: " + (JSON.parse(body).Released));
+	    console.log("");
+	    console.log("IMDB Rating: " + (JSON.parse(body).imdbRating));
+	    console.log("Country: " + (JSON.parse(body).Country));
+	    console.log("Language: " + (JSON.parse(body).Language));
+	    console.log("");
+	    console.log("Plot: " + (JSON.parse(body).Plot));
+	    console.log("Actors: " + (JSON.parse(body).Actors));
+	    console.log("");
+	    console.log("Rotten Tomatoes Rating: " + (JSON.parse(body).tomatoRating));
+	    console.log("Rotten Tomatoes URL: " + (JSON.parse(body).tomatoURL));
+	    console.log('------------------------------------------------------------------')
 	  }
 	})
 }
