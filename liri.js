@@ -10,8 +10,35 @@ var spotify = require('spotify');
 var commands = process.argv[2];
 var titleName = process.argv[3];
 
+switch (commands) {
+        case "my-tweets":
+            liritweets();
+            break;
+        case "spotify-this-song":
+            lirispotify();
+            break;
+        case "movie-this":
+            lirimovie();
+            break;
+        case "do-what-it-says":
+            lirisays();
+            break;
+        default:
+        	console.log("");
+        	console.log('------------------------------------------------------------------');
+            console.log('invalid entry, Please put right command after: node liri.js');
+            console.log('------------------------------------------------------------------');
+            console.log('choices are:');
+            console.log('	my-tweets');
+            console.log('	spotify-this-song <artist or song>');
+            console.log('	movie-this <movie title>');
+            console.log('	do-what-it-says');
+            console.log('------------------------------------------------------------------');
+
+}
+
 //twitter-----------------
-if (commands == "my-tweets"){
+function liritweets() {
 	var params = {screen_name: 'SuperJWillS'};
 	importclient.t.get('statuses/user_timeline', params, function(error, tweets, response) {
 	  if (!error) {
@@ -19,10 +46,12 @@ if (commands == "my-tweets"){
 	    // console.log(tweets[0].text);
 	    for (var i = 0; i < tweets.length; i++){
 	    // for (var i = 0; i < tweets.length||i < 20; i++){
+	    	console.log('------------------------------------------------------------------');
 	    	console.log("");
-	    	console.log(tweets[i].text);
+	    	console.log("Date: " + tweets[i].created_at);
+	    	console.log("Tweets: " + tweets[i].text);
 	    	console.log("");
-	    	console.log('------------------------------------------------------------------')
+	    	console.log('------------------------------------------------------------------');
 	    }
 	  }
 	});
@@ -30,7 +59,7 @@ if (commands == "my-tweets"){
 //end of twitter------------------------
 
 //spotify--------------------------------
-if (commands == "spotify-this-song"){
+function lirispotify() {
 	if (!titleName){
 		titleName = "Ace of Base";
 	}
@@ -61,7 +90,7 @@ if (commands == "spotify-this-song"){
 //end of spotify--------------------------------
 
 //Movie--------------------------------------
-if (commands == "movie-this"){
+function lirimovie() {
 	if (!titleName){
 		titleName = "Mr Nobody";
 	}
@@ -101,3 +130,31 @@ if (commands == "movie-this"){
 	})
 }
 //end of movie ----------------------------------
+
+
+//fs command do-what-it-says--------------------------------------
+function lirisays(){
+	fs.readFile('random.txt', {encoding: 'utf-8'},  function(err, data) {
+			// console.log(data);
+			var output = data.split(",");
+			// console.log(output);
+			// console.log(output[0]);
+			// console.log(output[1]);
+			commands = output[0];
+			console.log("Random Command: " +commands);
+			titleName = output[1];
+			console.log("Random Title: " +titleName);
+			if(commands == 'my-tweets'){
+				liritweets();
+			}
+			if(commands == 'spotify-this-song'){
+				lirispotify();
+			}
+			if(commands == 'movie-this'){
+				lirimovie();
+			} else {
+				console.log("Wrong commands")
+			}		
+	});
+}
+//end of fs command do-what-it-says ----------------------------------
