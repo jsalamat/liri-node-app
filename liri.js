@@ -46,12 +46,15 @@ function liritweets() {
 	    // console.log(tweets[0].text);
 	    for (var i = 0; i < tweets.length; i++){
 	    // for (var i = 0; i < tweets.length||i < 20; i++){
-	    	console.log('------------------------------------------------------------------');
-	    	console.log("");
-	    	console.log("Date: " + tweets[i].created_at);
-	    	console.log("Tweets: " + tweets[i].text);
-	    	console.log("");
-	    	console.log('------------------------------------------------------------------');
+		    var tweetlog =
+		    	'------------------------------------------------------------------'+'\r\n'+
+		    	"" +'\r\n'+
+		    	"Date: " + tweets[i].created_at +'\r\n'+
+		    	"Tweets: " + tweets[i].text +'\r\n'+
+		    	"" +'\r\n'+
+		    	'------------------------------------------------------------------';
+		    	console.log(tweetlog);
+		    	lirilog(tweetlog);
 	    }
 	  }
 	});
@@ -77,13 +80,17 @@ function lirispotify() {
 	    	// console.log(data);
 	    	// console.log(JSON.stringify(data.tracks, null, 2)); 
 	    for (var i = 0; i < 20; i++){
-	    	console.log("");
-	    	console.log("Artist(s): " + data.tracks.items[i].artists[0].name);
-	    	console.log("Song\'s Name: " + data.tracks.items[i].name);
-	    	console.log("Preview Link: " + data.tracks.items[i].preview_url);
-	    	console.log("Album: " + data.tracks.items[i].album.name);
-	    	console.log("");
-	    	console.log('------------------------------------------------------------------')
+	    	var spotifylog =
+	    		'------------------------------------------------------------------'+'\r\n'+
+		    	"" +'\r\n'+
+		    	"Artist(s): " + data.tracks.items[i].artists[0].name +'\r\n'+
+		    	"Song\'s Name: " + data.tracks.items[i].name +'\r\n'+
+		    	"Preview Link: " + data.tracks.items[i].preview_url +'\r\n'+
+		    	"Album: " + data.tracks.items[i].album.name +'\r\n'+
+		    	"" +'\r\n'+
+		    	'------------------------------------------------------------------' ;
+		    console.log(spotifylog);
+		    lirilog(spotifylog);
 	    } 
 	});
 }
@@ -109,23 +116,25 @@ function lirimovie() {
 	request(queryUrl, function (error, response, body) {
 	  if (!error && response.statusCode == 200) {
 	    // console.log(JSON.parse(body));
-
-	  	console.log('------------------------------------------------------------------')
-	  	console.log("");
-	  	console.log("Title: " + (JSON.parse(body).Title));
-	    console.log("Released: " + (JSON.parse(body).Released));
-	    console.log("");
-	    console.log("IMDB Rating: " + (JSON.parse(body).imdbRating));
-	    console.log("Country: " + (JSON.parse(body).Country));
-	    console.log("Language: " + (JSON.parse(body).Language));
-	    console.log("");
-	    console.log("Plot: " + (JSON.parse(body).Plot));
-	    console.log("Actors: " + (JSON.parse(body).Actors));
-	    console.log("");
-	    console.log("Rotten Tomatoes Rating: " + (JSON.parse(body).tomatoRating));
-	    console.log("Rotten Tomatoes URL: " + (JSON.parse(body).tomatoURL));
-	    console.log("");
-	    console.log('------------------------------------------------------------------')
+	    var movielog =
+			  	'------------------------------------------------------------------' +'\r\n'+
+			  	"" +'\r\n'+
+			  	"Title: " + (JSON.parse(body).Title) +'\r\n'+
+			    "Released: " + (JSON.parse(body).Released) +'\r\n'+
+			    "" +'\r\n'+
+			    "IMDB Rating: " + (JSON.parse(body).imdbRating) +'\r\n'+
+			    "Country: " + (JSON.parse(body).Country) +'\r\n'+
+			    "Language: " + (JSON.parse(body).Language) +'\r\n'+
+			    "" +'\r\n'+
+			    "Plot: " + (JSON.parse(body).Plot) +'\r\n'+
+			    "Actors: " + (JSON.parse(body).Actors) +'\r\n'+
+			    "" +'\r\n'+
+			    "Rotten Tomatoes Rating: " + (JSON.parse(body).tomatoRating) +'\r\n'+
+			    "Rotten Tomatoes URL: " + (JSON.parse(body).tomatoURL) +'\r\n'+
+			    "" +'\r\n'+
+			    '------------------------------------------------------------------' ;
+		console.log(movielog);
+		    lirilog(movielog);
 	  }
 	})
 }
@@ -158,3 +167,14 @@ function lirisays(){
 	});
 }
 //end of fs command do-what-it-says ----------------------------------
+
+//log function --------------------------------------------------------
+function lirilog(a){
+	fs.appendFile("log.txt", a, function(err) {
+	  // If an error was experienced we say it.
+	  if (err) {
+	    console.log(err);
+	  }
+	});
+}
+//end log function ----------------- ----------------------------------
